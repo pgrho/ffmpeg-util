@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+    <Version>0.0.1</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Utility to launch ffmpeg or ffprobe process</Description>
+    <Authors>shipwreck.jp</Authors>
+    <Company />
+  </PropertyGroup>
+
+</Project>
