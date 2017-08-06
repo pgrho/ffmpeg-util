@@ -1,0 +1,36 @@
+﻿<#@ template language="C#" #>
+using System;
+using System.Runtime.CompilerServices;
+
+namespace Shipwreck.FfmpegUtil
+{
+	partial class BufferObject
+	{
+<#
+foreach (var T in new [] { "Boolean", "Byte", "SByte", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64", "Single", "Double", "Decimal", "DateTime", "DateTimeOffset", "TimeSpan" })
+{
+#>
+        protected unsafe <#= T #> Get<#= T #>([CallerMemberName]string property = null)
+        {
+            <#= T #> r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(<#= T #>);
+        }
+
+        protected unsafe void SetValue(<#= T #> value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == default(<#= T #>))
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                SetValue(p, (short)sizeof(<#= T #>), (byte*)&value);
+            }
+        }
+
+<#
+}
+#>
+	}
+}

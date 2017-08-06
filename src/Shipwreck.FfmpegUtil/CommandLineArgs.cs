@@ -2,7 +2,7 @@
 
 namespace Shipwreck.FfmpegUtil
 {
-    public abstract class CommandLineArgs
+    public abstract class CommandLineArgs : BufferObject
     {
         internal abstract void AppendArgs(StringBuilder builder);
 

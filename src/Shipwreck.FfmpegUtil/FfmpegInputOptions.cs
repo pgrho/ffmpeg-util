@@ -5,7 +5,11 @@ namespace Shipwreck.FfmpegUtil
 {
     public sealed class FfmpegInputOptions : FfmpegFileOptions
     {
-        public TimeSpan TimeSpanOffset { get; set; }
+        public TimeSpan TimeSpanOffset
+        {
+            get => GetTimeSpan();
+            set => SetValue(value);
+        }
 
         internal override void AppendArgs(StringBuilder builder)
         {
@@ -14,7 +18,10 @@ namespace Shipwreck.FfmpegUtil
             builder.AppendIf("-sseof", SeekToLast);
             builder.AppendIf("-itsoffset", TimeSpanOffset);
 
-            builder.Append("-i ").Append(FilePath).Append(' ');
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                builder.Append("-i \"").Append(FilePath).Append("\" ");
+            }
         }
     }
 }

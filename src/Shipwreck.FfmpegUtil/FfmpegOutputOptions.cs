@@ -5,11 +5,23 @@ namespace Shipwreck.FfmpegUtil
 {
     public sealed class FfmpegOutputOptions : FfmpegFileOptions
     {
-        public TimeSpan To { get; set; }
+        public TimeSpan To
+        {
+            get => GetTimeSpan();
+            set => SetValue(value);
+        }
 
-        public long FileSize { get; set; }
+        public long FileSize
+        {
+            get => GetInt64();
+            set => SetValue(value);
+        }
 
-        public DateTime TimeStamp { get; set; }
+        public DateTime TimeStamp
+        {
+            get => GetDateTime();
+            set => SetValue(value);
+        }
 
         internal override void AppendArgs(StringBuilder builder)
         {
@@ -20,7 +32,10 @@ namespace Shipwreck.FfmpegUtil
             builder.AppendIf("-sseof", SeekToLast);
             builder.AppendIf("-timestamp", TimeStamp);
 
-            builder.Append(FilePath).Append(' ');
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                builder.Append('"').Append(FilePath).Append("\" ");
+            }
         }
     }
 }

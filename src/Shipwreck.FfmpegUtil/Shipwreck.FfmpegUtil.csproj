@@ -1,12 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <Version>0.0.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Utility to launch ffmpeg or ffprobe process</Description>
     <Authors>shipwreck.jp</Authors>
     <Company />
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Update="Generated Codes\BufferObject.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BufferObject.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Generated Codes\BufferObject.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BufferObject.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
 </Project>

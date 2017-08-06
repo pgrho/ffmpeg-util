@@ -3,13 +3,31 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public abstract class FfmpegFileOptions
+    public abstract class FfmpegFileOptions : BufferObject
     {
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
 
-        public TimeSpan Duration { get; set; }
-        public TimeSpan SeekTo { get; set; }
-        public TimeSpan SeekToLast { get; set; }
+        public TimeSpan Duration
+        {
+            get => GetTimeSpan();
+            set => SetValue(value);
+        }
+
+        public TimeSpan SeekTo
+        {
+            get => GetTimeSpan();
+            set => SetValue(value);
+        }
+
+        public TimeSpan SeekToLast
+        {
+            get => GetTimeSpan();
+            set => SetValue(value);
+        }
 
         internal abstract void AppendArgs(StringBuilder builder);
 
