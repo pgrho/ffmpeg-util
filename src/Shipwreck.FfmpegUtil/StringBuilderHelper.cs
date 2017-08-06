@@ -28,7 +28,7 @@ namespace Shipwreck.FfmpegUtil
         {
             if (date != DateTime.MinValue)
             {
-                b.Append(key).Append(' ').Append(date.ToString("yyyyMMdd HHmmss.fff", DateTimeFormatInfo.InvariantInfo)).Append(' ');
+                b.Append(key).Append(' ').Append(date.ToString("yyyyMMddTHHmmss.fff", DateTimeFormatInfo.InvariantInfo)).Append(' ');
             }
             return b;
         }
