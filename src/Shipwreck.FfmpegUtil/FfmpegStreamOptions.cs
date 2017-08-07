@@ -8,62 +8,26 @@ namespace Shipwreck.FfmpegUtil
     {
         #region Stream specifier
 
-        private byte _StreamIndex = byte.MaxValue;
-
-        [DefaultValue(FfmpegStreamType.All)]
-        public FfmpegStreamType StreamType { get; set; }
-
-        [DefaultValue(null)]
-        public byte? StreamIndex
+        public FfmpegStreamType StreamType
         {
-            get => _StreamIndex == byte.MaxValue ? (byte?)null : _StreamIndex;
+            get => StreamSpecifier.Type;
             set
             {
-                if (value == null)
-                {
-                    _StreamIndex = byte.MaxValue;
-                }
-                else if (value == byte.MaxValue)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                else
-                {
-                    _StreamIndex = value.Value;
-                }
+                var ss = StreamSpecifier;
+                StreamSpecifier = new StreamSpecifier(value, ss.Index);
             }
         }
-
-        protected string StreamSpecifier
+        public byte? StreamIndex
         {
-            get
+            get => StreamSpecifier.Index;
+            set
             {
-                if (StreamType == FfmpegStreamType.All)
-                {
-                    if (_StreamIndex == byte.MaxValue)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        return _StreamIndex.ToString();
-                    }
-                }
-                else
-                {
-                    var ts = StreamType.ToArg();
-
-                    if (_StreamIndex == byte.MaxValue)
-                    {
-                        return ts.ToString();
-                    }
-                    else
-                    {
-                        return ts + ":" + _StreamIndex;
-                    }
-                }
+                var ss = StreamSpecifier;
+                StreamSpecifier = new StreamSpecifier(ss.Type, value);
             }
         }
+
+        public StreamSpecifier StreamSpecifier { get; set; }
 
         #endregion Stream specifier
 
@@ -100,7 +64,7 @@ namespace Shipwreck.FfmpegUtil
 
         internal virtual void AppendArgs(StringBuilder builder)
         {
-            var ss = StreamSpecifier;
+            var ss = StreamSpecifier.ToString();
             builder.AppendIfStream("-c", ss, Codec);
             builder.AppendIfStream("-frames", ss, FrameCount);
             builder.AppendIfStream("-q", ss, QualityScale);
