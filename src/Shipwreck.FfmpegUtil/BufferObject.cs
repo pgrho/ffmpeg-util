@@ -8,6 +8,9 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
+    /// <summary>
+    /// Provides a variable length properties storage.
+    /// </summary>
     public abstract partial class BufferObject
     {
         private static readonly Dictionary<Type, Dictionary<string, byte>> _PropertyIndexes = new Dictionary<Type, Dictionary<string, byte>>();
@@ -18,6 +21,9 @@ namespace Shipwreck.FfmpegUtil
             _Data = new List<byte>();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance contains any value.
+        /// </summary>
         public virtual bool IsEmpty
             => _Data?.Count > 0;
 
