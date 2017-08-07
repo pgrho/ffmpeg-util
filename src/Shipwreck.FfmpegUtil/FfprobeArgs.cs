@@ -24,6 +24,8 @@ namespace Shipwreck.FfmpegUtil
 
         internal override void AppendArgs(StringBuilder builder)
         {
+            base.AppendArgs(builder);
+
             builder.AppendIf("-hide_banner", HideBanner);
             builder.AppendIf("-show_format", ShowFormat);
             builder.AppendIf("-show_streams", ShowStreams);

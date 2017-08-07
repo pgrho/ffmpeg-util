@@ -212,7 +212,11 @@ namespace Shipwreck.FfmpegUtil
         protected T GetEnum<T>([CallerMemberName]string property = null)
             where T : struct //, IConvertible
         {
-            switch (Marshal.SizeOf(typeof(T)))
+            var ut = Enum.GetUnderlyingType(typeof(T));
+
+            Marshal.SizeOf(ut);
+
+            switch (Marshal.SizeOf(ut))
             {
                 case 1:
                     return (T)(object)GetByte(property);
@@ -231,12 +235,16 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        protected unsafe void SetEnum<T>(T value, [CallerMemberName]string property = null)
+        protected unsafe void SetValue<T>(T value, [CallerMemberName]string property = null)
             where T : struct //, IConvertible
         {
             // TODO: use IConvertible
 
-            switch (Marshal.SizeOf(typeof(T)))
+            var ut = Enum.GetUnderlyingType(typeof(T));
+
+            Marshal.SizeOf(ut);
+
+            switch (Marshal.SizeOf(ut))
             {
                 case 1:
                     SetValue((byte)(object)value, property);

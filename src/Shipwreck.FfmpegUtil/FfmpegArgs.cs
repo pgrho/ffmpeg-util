@@ -12,6 +12,8 @@ namespace Shipwreck.FfmpegUtil
 
         internal override void AppendArgs(StringBuilder builder)
         {
+            base.AppendArgs(builder);
+
             InputOptions?.AppendArgs(builder);
             OutputOptions?.AppendArgs(builder);
         }
