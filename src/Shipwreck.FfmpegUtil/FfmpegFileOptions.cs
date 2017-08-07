@@ -11,6 +11,9 @@ namespace Shipwreck.FfmpegUtil
         {
         }
 
+        public override bool IsEmpty
+            => base.IsEmpty && !ShouldSerializeStreams();
+
         public string FilePath
         {
             get => GetString();
@@ -45,7 +48,7 @@ namespace Shipwreck.FfmpegUtil
             => _Streams ?? (_Streams = new Collection<FfmpegStreamOptions>());
 
         public bool ShouldSerializeStreams()
-             => _Streams?.Count > 0;
+             => _Streams?.Any(s => !s.IsEmpty) == true;
 
         public void ResetStreams()
              => _Streams?.Clear();
@@ -112,6 +115,12 @@ namespace Shipwreck.FfmpegUtil
         }
 
         #endregion ƒXƒgƒŠ[ƒ€•Êİ’è
+
+        public override void Clear()
+        {
+            base.Clear();
+            _Streams?.Clear();
+        }
 
         internal abstract void AppendArgs(StringBuilder builder);
 

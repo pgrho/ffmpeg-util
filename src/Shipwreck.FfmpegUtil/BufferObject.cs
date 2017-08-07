@@ -18,6 +18,12 @@ namespace Shipwreck.FfmpegUtil
             _Data = new List<byte>();
         }
 
+        public virtual bool IsEmpty
+            => _Data?.Count > 0;
+
+        public virtual void Clear()
+            => _Data?.Clear();
+
         private static bool IsSupportedType(Type type)
             => type.GetTypeInfo().IsValueType || type == typeof(string);
 
