@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -14,6 +15,10 @@ namespace Shipwreck.FfmpegUtil
         public override bool IsEmpty
             => base.IsEmpty && !ShouldSerializeStreams();
 
+        /// <summary>
+        /// Gets or sets a file path.
+        /// </summary>
+        [DefaultValue(null)]
         public string FilePath
         {
             get => GetString();

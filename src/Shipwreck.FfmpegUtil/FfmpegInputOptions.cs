@@ -40,7 +40,8 @@ namespace Shipwreck.FfmpegUtil
 
             if (!string.IsNullOrEmpty(FilePath))
             {
-                builder.Append("-i \"").Append(FilePath).Append("\" ");
+                builder.Append("-i ");
+                builder.AppendFilePath(FilePath);
             }
         }
     }

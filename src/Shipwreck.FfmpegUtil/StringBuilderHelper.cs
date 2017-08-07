@@ -6,6 +6,17 @@ namespace Shipwreck.FfmpegUtil
 {
     internal static partial class StringBuilderHelper
     {
+        public static StringBuilder AppendFilePath(this StringBuilder b, string filePath)
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                b.Append('"');
+                b.Append(filePath);
+                b.Append("\" ");
+            }
+            return b;
+        }
+
         public static StringBuilder TrimEnd(this StringBuilder b)
         {
             if (b.Length > 0 && b[b.Length - 1] == ' ')

@@ -5,6 +5,18 @@ namespace Shipwreck.FfmpegUtil
     public class FfprobeArgsTest
     {
         [Fact]
+        public void FilePathTest()
+        {
+            var target = new FfprobeArgs();
+            Assert.Null(target.FilePath);
+
+            var value = "C:\\t.mp4";
+            target.FilePath = value;
+            Assert.Equal(value, target.FilePath);
+            Assert.Equal($"\"{value}\"", target.ToString());
+        }
+
+        [Fact]
         public void HideBannerTest()
         {
             var target = new FfprobeArgs();

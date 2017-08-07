@@ -34,5 +34,17 @@ namespace Shipwreck.FfmpegUtil
             Assert.Equal(new DateTime(1, 2, 3, 4, 5, 6, 7), target.TimeStamp);
             Assert.Equal("-timestamp 00010203T040506.007", target.ToString());
         }
+
+        [Fact]
+        public void FilePathTest()
+        {
+            var target = new FfmpegOutputOptions();
+            Assert.Null(target.FilePath);
+
+            var value = "C:\\t.mp4";
+            target.FilePath = value;
+            Assert.Equal(value, target.FilePath);
+            Assert.Equal($"\"{value}\"", target.ToString());
+        }
     }
 }
