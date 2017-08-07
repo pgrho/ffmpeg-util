@@ -69,5 +69,25 @@ namespace Shipwreck.FfmpegUtil
             Assert.Equal(value, target.ShowEntries);
             Assert.Equal("-show_entries default", target.ToString());
         }
+
+        [Fact]
+        public void PrintFormatTest()
+        {
+            var target = new FfprobeArgs();
+            var value = "default";
+            target.PrintFormat = value;
+            Assert.Equal(value, target.PrintFormat);
+            Assert.Equal("-of default", target.ToString());
+        }
+
+        [Fact]
+        public void SkipFrameTest()
+        {
+            var target = new FfprobeArgs();
+            var value = "nokey";
+            target.SkipFrame = value;
+            Assert.Equal(value, target.SkipFrame);
+            Assert.Equal("-skip_frame nokey", target.ToString());
+        }
     }
 }

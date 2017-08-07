@@ -49,6 +49,20 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(null)]
+        public string PrintFormat
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
+        [DefaultValue(null)]
+        public string SkipFrame
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
         internal override void AppendArgs(StringBuilder builder)
         {
             builder.AppendFilePath(FilePath);
@@ -60,6 +74,8 @@ namespace Shipwreck.FfmpegUtil
             builder.AppendIf("-show_streams", ShowStreams);
             builder.AppendIf("-select_streams", SelectStreams);
             builder.AppendIf("-show_entries", ShowEntries);
+            builder.AppendIf("-of", PrintFormat);
+            builder.AppendIf("-skip_frame", SkipFrame);
         }
     }
 }
