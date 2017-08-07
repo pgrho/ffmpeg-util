@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.Text;
 
 namespace Shipwreck.FfmpegUtil
@@ -14,4 +16,5 @@ namespace Shipwreck.FfmpegUtil
             OutputOptions?.AppendArgs(builder);
         }
     }
+
 }

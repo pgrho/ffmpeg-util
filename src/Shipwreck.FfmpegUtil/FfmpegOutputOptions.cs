@@ -32,6 +32,14 @@ namespace Shipwreck.FfmpegUtil
             builder.AppendIf("-sseof", SeekToLast);
             builder.AppendIf("-timestamp", TimeStamp);
 
+            if (ShouldSerializeStreams())
+            {
+                foreach (var s in Streams)
+                {
+                    s.AppendArgs(builder);
+                }
+            }
+
             if (!string.IsNullOrEmpty(FilePath))
             {
                 builder.Append('"').Append(FilePath).Append("\" ");

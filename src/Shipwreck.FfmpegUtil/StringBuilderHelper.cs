@@ -50,5 +50,24 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
     }
 }
