@@ -105,9 +105,9 @@ namespace Shipwreck.FfmpegUtil
             set => SetStreamOptions(value, FfmpegStreamType.Video);
         }
 
-        public FfmpegAudiotreamOptions AudioStream
+        public FfmpegAudioStreamOptions AudioStream
         {
-            get => GetStreamOptions<FfmpegAudiotreamOptions>(FfmpegStreamType.Audio);
+            get => GetStreamOptions<FfmpegAudioStreamOptions>(FfmpegStreamType.Audio);
             set => SetStreamOptions(value, FfmpegStreamType.Audio);
         }
 

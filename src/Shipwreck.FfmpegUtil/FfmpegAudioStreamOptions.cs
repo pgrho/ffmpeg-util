@@ -2,7 +2,7 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public sealed class FfmpegAudiotreamOptions : FfmpegStreamOptions
+    public sealed class FfmpegAudioStreamOptions : FfmpegStreamOptions
     {
         internal override void AppendArgs(StringBuilder builder)
         {
