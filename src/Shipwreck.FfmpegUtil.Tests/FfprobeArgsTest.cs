@@ -35,5 +35,17 @@ namespace Shipwreck.FfmpegUtil
             Assert.True(target.ShowStreams);
             Assert.Equal("-show_streams", target.ToString());
         }
+
+        [Fact]
+        public void SelectStreamsTest()
+        {
+            var target = new FfprobeArgs();
+            Assert.True(target.SelectStreams.IsEmpty);
+
+            var value = new StreamSpecifier(FfmpegStreamType.Video, 0);
+            target.SelectStreams = value;
+            Assert.Equal(value, target.SelectStreams);
+            Assert.Equal("-select_streams V:0", target.ToString());
+        }
     }
 }

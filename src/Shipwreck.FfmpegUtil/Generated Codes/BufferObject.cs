@@ -591,12 +591,51 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe StreamSpecifier GetStreamSpecifier([CallerMemberName]string property = null)
+        {
+            StreamSpecifier r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(StreamSpecifier);
+        }
+
+        protected unsafe void SetValue(StreamSpecifier value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == default(StreamSpecifier))
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                SetValue(p, (short)sizeof(StreamSpecifier), (byte*)&value);
+            }
+        }
+
+        protected unsafe StreamSpecifier? GetNullableStreamSpecifier([CallerMemberName]string property = null)
+        {
+            StreamSpecifier r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (StreamSpecifier?)null;
+        }
+
+        protected unsafe void SetValue(StreamSpecifier? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(StreamSpecifier), (byte*)&v);
+            }
+        }
+
     }
 	partial class StringBuilderHelper
 	{
         public static StringBuilder AppendIf(this StringBuilder b, string key, Byte value)
         {
-            if (value != 0)
+            if (value != default(Byte))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -605,7 +644,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Byte value)
         {
-            if (value != 0)
+            if (value != default(Byte))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -623,7 +662,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, SByte value)
         {
-            if (value != 0)
+            if (value != default(SByte))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -632,7 +671,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, SByte value)
         {
-            if (value != 0)
+            if (value != default(SByte))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -650,7 +689,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int16 value)
         {
-            if (value != 0)
+            if (value != default(Int16))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -659,7 +698,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int16 value)
         {
-            if (value != 0)
+            if (value != default(Int16))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -677,7 +716,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt16 value)
         {
-            if (value != 0)
+            if (value != default(UInt16))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -686,7 +725,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt16 value)
         {
-            if (value != 0)
+            if (value != default(UInt16))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -704,7 +743,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int32 value)
         {
-            if (value != 0)
+            if (value != default(Int32))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -713,7 +752,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int32 value)
         {
-            if (value != 0)
+            if (value != default(Int32))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -731,7 +770,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt32 value)
         {
-            if (value != 0)
+            if (value != default(UInt32))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -740,7 +779,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt32 value)
         {
-            if (value != 0)
+            if (value != default(UInt32))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -758,7 +797,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int64 value)
         {
-            if (value != 0)
+            if (value != default(Int64))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -767,7 +806,7 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int64 value)
         {
-            if (value != 0)
+            if (value != default(Int64))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))
@@ -785,7 +824,7 @@ namespace Shipwreck.FfmpegUtil
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt64 value)
         {
-            if (value != 0)
+            if (value != default(UInt64))
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
@@ -794,7 +833,34 @@ namespace Shipwreck.FfmpegUtil
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt64 value)
         {
-            if (value != 0)
+            if (value != default(UInt64))
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, StreamSpecifier value)
+        {
+            if (value != default(StreamSpecifier))
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, StreamSpecifier value)
+        {
+            if (value != default(StreamSpecifier))
             {
                 b.Append(key);
                 if (!string.IsNullOrEmpty(streamSpecifier))

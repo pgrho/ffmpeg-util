@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public struct StreamSpecifier
+    public struct StreamSpecifier : IEquatable<StreamSpecifier>
     {
         private byte _Index;
 
@@ -58,5 +58,20 @@ namespace Shipwreck.FfmpegUtil
                     ? (si == null ? string.Empty : si.Value.ToString())
                     : (si == null ? Type.ToArg().ToString() : (Type.ToArg().ToString() + ":" + si.Value));
         }
+
+        public override bool Equals(object obj)
+            => obj is StreamSpecifier && this == (StreamSpecifier)obj;
+
+        public bool Equals(StreamSpecifier other)
+            => this == other;
+
+        public override int GetHashCode()
+            => ((int)Type << 8) + _Index;
+
+        public static bool operator ==(StreamSpecifier left, StreamSpecifier right)
+            => left.Type == right.Type && left._Index == right._Index;
+
+        public static bool operator !=(StreamSpecifier left, StreamSpecifier right)
+            => left.Type != right.Type || left._Index != right._Index;
     }
 }
