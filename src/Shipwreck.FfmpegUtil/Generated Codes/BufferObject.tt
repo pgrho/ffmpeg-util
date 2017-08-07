@@ -72,6 +72,25 @@ foreach (var T in integers)
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, <#= T #> value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
 <#
 }
 #>

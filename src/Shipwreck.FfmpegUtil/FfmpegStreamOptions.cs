@@ -84,10 +84,26 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(0)]
+        public int FrameCount
+        {
+            get => GetInt32();
+            set => SetValue(value);
+        }
+
+        [DefaultValue(0)]
+        public byte QualityScale
+        {
+            get => GetByte();
+            set => SetValue(value);
+        }
+
         internal virtual void AppendArgs(StringBuilder builder)
         {
             var ss = StreamSpecifier;
             builder.AppendIfStream("-c", ss, Codec);
+            builder.AppendIfStream("-frames", ss, FrameCount);
+            builder.AppendIfStream("-q", ss, QualityScale);
 
             builder.AppendIfStream("-disposition", ss, Disposition);
         }

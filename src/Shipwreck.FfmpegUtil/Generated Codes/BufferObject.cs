@@ -602,12 +602,50 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Byte value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
         public static StringBuilder AppendIf(this StringBuilder b, string key, SByte value)
         {
             if (value != 0)
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, SByte value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
             return b;
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int16 value)
@@ -618,12 +656,50 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int16 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt16 value)
         {
             if (value != 0)
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt16 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
             return b;
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int32 value)
@@ -634,12 +710,50 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int32 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt32 value)
         {
             if (value != 0)
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt32 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
             return b;
         }
         public static StringBuilder AppendIf(this StringBuilder b, string key, Int64 value)
@@ -650,12 +764,50 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Int64 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
         public static StringBuilder AppendIf(this StringBuilder b, string key, UInt64 value)
         {
             if (value != 0)
             {
                 b.Append(key).Append(' ').Append(value).Append(' ');
             }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, UInt64 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value);
+                b.Append(' ');
+            }
+
             return b;
         }
 	}
