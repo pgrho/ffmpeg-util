@@ -18,6 +18,9 @@ namespace Shipwreck.FfmpegUtil
             _Data = new List<byte>();
         }
 
+        private static bool IsSupportedType(Type type)
+            => type.GetTypeInfo().IsValueType || type == typeof(string);
+
         protected static Dictionary<string, byte> GetPropertyIndexes(Type type)
         {
             lock (_PropertyIndexes)
@@ -41,18 +44,8 @@ namespace Shipwreck.FfmpegUtil
                 foreach (var p in info.DeclaredProperties)
                 {
                     if (!p.CanRead
-                        || !p.CanWrite)
-                    {
-                        continue;
-                    }
-
-                    // Allowed types:
-                    var pt = p.PropertyType.GetTypeInfo();
-                    if (!pt.IsPrimitive
-                        && !pt.IsEnum
-                        && p.PropertyType != typeof(string)
-                        && p.PropertyType != typeof(DateTime)
-                        && p.PropertyType != typeof(TimeSpan))
+                        || !p.CanWrite
+                        || !IsSupportedType(p.PropertyType))
                     {
                         continue;
                     }

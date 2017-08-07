@@ -3,8 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace Shipwreck.FfmpegUtil
 {
-	partial class BufferObject
-	{
+    partial class BufferObject
+    {
         protected unsafe Boolean GetBoolean([CallerMemberName]string property = null)
         {
             Boolean r;
@@ -21,6 +21,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(Boolean), (byte*)&value);
+            }
+        }
+
+        protected unsafe Boolean? GetNullableBoolean([CallerMemberName]string property = null)
+        {
+            Boolean r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Boolean?)null;
+        }
+
+        protected unsafe void SetValue(Boolean? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Boolean), (byte*)&v);
             }
         }
 
@@ -43,6 +63,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Byte? GetNullableByte([CallerMemberName]string property = null)
+        {
+            Byte r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Byte?)null;
+        }
+
+        protected unsafe void SetValue(Byte? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Byte), (byte*)&v);
+            }
+        }
+
         protected unsafe SByte GetSByte([CallerMemberName]string property = null)
         {
             SByte r;
@@ -59,6 +99,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(SByte), (byte*)&value);
+            }
+        }
+
+        protected unsafe SByte? GetNullableSByte([CallerMemberName]string property = null)
+        {
+            SByte r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (SByte?)null;
+        }
+
+        protected unsafe void SetValue(SByte? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(SByte), (byte*)&v);
             }
         }
 
@@ -81,6 +141,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Int16? GetNullableInt16([CallerMemberName]string property = null)
+        {
+            Int16 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Int16?)null;
+        }
+
+        protected unsafe void SetValue(Int16? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Int16), (byte*)&v);
+            }
+        }
+
         protected unsafe UInt16 GetUInt16([CallerMemberName]string property = null)
         {
             UInt16 r;
@@ -97,6 +177,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(UInt16), (byte*)&value);
+            }
+        }
+
+        protected unsafe UInt16? GetNullableUInt16([CallerMemberName]string property = null)
+        {
+            UInt16 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (UInt16?)null;
+        }
+
+        protected unsafe void SetValue(UInt16? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(UInt16), (byte*)&v);
             }
         }
 
@@ -119,6 +219,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Int32? GetNullableInt32([CallerMemberName]string property = null)
+        {
+            Int32 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Int32?)null;
+        }
+
+        protected unsafe void SetValue(Int32? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Int32), (byte*)&v);
+            }
+        }
+
         protected unsafe UInt32 GetUInt32([CallerMemberName]string property = null)
         {
             UInt32 r;
@@ -135,6 +255,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(UInt32), (byte*)&value);
+            }
+        }
+
+        protected unsafe UInt32? GetNullableUInt32([CallerMemberName]string property = null)
+        {
+            UInt32 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (UInt32?)null;
+        }
+
+        protected unsafe void SetValue(UInt32? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(UInt32), (byte*)&v);
             }
         }
 
@@ -157,6 +297,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Int64? GetNullableInt64([CallerMemberName]string property = null)
+        {
+            Int64 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Int64?)null;
+        }
+
+        protected unsafe void SetValue(Int64? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Int64), (byte*)&v);
+            }
+        }
+
         protected unsafe UInt64 GetUInt64([CallerMemberName]string property = null)
         {
             UInt64 r;
@@ -173,6 +333,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(UInt64), (byte*)&value);
+            }
+        }
+
+        protected unsafe UInt64? GetNullableUInt64([CallerMemberName]string property = null)
+        {
+            UInt64 r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (UInt64?)null;
+        }
+
+        protected unsafe void SetValue(UInt64? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(UInt64), (byte*)&v);
             }
         }
 
@@ -195,6 +375,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Single? GetNullableSingle([CallerMemberName]string property = null)
+        {
+            Single r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Single?)null;
+        }
+
+        protected unsafe void SetValue(Single? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Single), (byte*)&v);
+            }
+        }
+
         protected unsafe Double GetDouble([CallerMemberName]string property = null)
         {
             Double r;
@@ -211,6 +411,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(Double), (byte*)&value);
+            }
+        }
+
+        protected unsafe Double? GetNullableDouble([CallerMemberName]string property = null)
+        {
+            Double r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Double?)null;
+        }
+
+        protected unsafe void SetValue(Double? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Double), (byte*)&v);
             }
         }
 
@@ -233,6 +453,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Decimal? GetNullableDecimal([CallerMemberName]string property = null)
+        {
+            Decimal r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Decimal?)null;
+        }
+
+        protected unsafe void SetValue(Decimal? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Decimal), (byte*)&v);
+            }
+        }
+
         protected unsafe DateTime GetDateTime([CallerMemberName]string property = null)
         {
             DateTime r;
@@ -249,6 +489,26 @@ namespace Shipwreck.FfmpegUtil
             else
             {
                 SetValue(p, (short)sizeof(DateTime), (byte*)&value);
+            }
+        }
+
+        protected unsafe DateTime? GetNullableDateTime([CallerMemberName]string property = null)
+        {
+            DateTime r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (DateTime?)null;
+        }
+
+        protected unsafe void SetValue(DateTime? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(DateTime), (byte*)&v);
             }
         }
 
@@ -271,6 +531,26 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe DateTimeOffset? GetNullableDateTimeOffset([CallerMemberName]string property = null)
+        {
+            DateTimeOffset r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (DateTimeOffset?)null;
+        }
+
+        protected unsafe void SetValue(DateTimeOffset? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(DateTimeOffset), (byte*)&v);
+            }
+        }
+
         protected unsafe TimeSpan GetTimeSpan([CallerMemberName]string property = null)
         {
             TimeSpan r;
@@ -290,5 +570,25 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-	}
+        protected unsafe TimeSpan? GetNullableTimeSpan([CallerMemberName]string property = null)
+        {
+            TimeSpan r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (TimeSpan?)null;
+        }
+
+        protected unsafe void SetValue(TimeSpan? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(TimeSpan), (byte*)&v);
+            }
+        }
+
+    }
 }

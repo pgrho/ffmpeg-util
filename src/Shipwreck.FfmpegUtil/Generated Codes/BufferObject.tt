@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 
 namespace Shipwreck.FfmpegUtil
 {
-	partial class BufferObject
-	{
+    partial class BufferObject
+    {
 <#
 foreach (var T in new [] { "Boolean", "Byte", "SByte", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64", "Single", "Double", "Decimal", "DateTime", "DateTimeOffset", "TimeSpan" })
 {
@@ -29,8 +29,28 @@ foreach (var T in new [] { "Boolean", "Byte", "SByte", "Int16", "UInt16", "Int32
             }
         }
 
+        protected unsafe <#= T #>? GetNullable<#= T #>([CallerMemberName]string property = null)
+        {
+            <#= T #> r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (<#= T #>?)null;
+        }
+
+        protected unsafe void SetValue(<#= T #>? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(<#= T #>), (byte*)&v);
+            }
+        }
+
 <#
 }
 #>
-	}
+    }
 }
