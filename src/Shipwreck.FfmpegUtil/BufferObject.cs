@@ -57,7 +57,8 @@ namespace Shipwreck.FfmpegUtil
                 {
                     if (!p.CanRead
                         || !p.CanWrite
-                        || !IsSupportedType(p.PropertyType))
+                        || !IsSupportedType(p.PropertyType)
+                        || p.GetCustomAttribute<IgnoreBufferAttribute>() != null)
                     {
                         continue;
                     }

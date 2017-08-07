@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Text;
 
@@ -8,6 +7,7 @@ namespace Shipwreck.FfmpegUtil
     {
         #region Stream specifier
 
+        [IgnoreBuffer]
         public FfmpegStreamType StreamType
         {
             get => StreamSpecifier.Type;
@@ -17,6 +17,8 @@ namespace Shipwreck.FfmpegUtil
                 StreamSpecifier = new StreamSpecifier(value, ss.Index);
             }
         }
+
+        [IgnoreBuffer]
         public byte? StreamIndex
         {
             get => StreamSpecifier.Index;
@@ -27,7 +29,11 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        public StreamSpecifier StreamSpecifier { get; set; }
+        public StreamSpecifier StreamSpecifier
+        {
+            get => GetStreamSpecifier();
+            set => SetValue(value);
+        }
 
         #endregion Stream specifier
 
