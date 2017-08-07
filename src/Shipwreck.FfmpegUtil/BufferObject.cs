@@ -213,8 +213,6 @@ namespace Shipwreck.FfmpegUtil
         {
             var ut = Enum.GetUnderlyingType(typeof(T));
 
-            Marshal.SizeOf(ut);
-
             switch (Marshal.SizeOf(ut))
             {
                 case 1:
@@ -240,8 +238,6 @@ namespace Shipwreck.FfmpegUtil
             // TODO: use IConvertible
 
             var ut = Enum.GetUnderlyingType(typeof(T));
-
-            Marshal.SizeOf(ut);
 
             switch (Marshal.SizeOf(ut))
             {
