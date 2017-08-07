@@ -25,11 +25,10 @@ namespace Shipwreck.FfmpegUtil
 
         internal override void AppendArgs(StringBuilder builder)
         {
-            builder.AppendIf("-t", Duration);
+            base.AppendArgs(builder);
+
             builder.AppendIf("-to", To);
             builder.AppendIf("-fs", FileSize);
-            builder.AppendIf("-ss", SeekTo);
-            builder.AppendIf("-sseof", SeekToLast);
             builder.AppendIf("-timestamp", TimeStamp);
 
             if (ShouldSerializeStreams())

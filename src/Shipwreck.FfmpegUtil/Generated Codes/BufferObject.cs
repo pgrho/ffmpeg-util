@@ -1,49 +1,11 @@
 ﻿using System;
+using System.Text;
 using System.Runtime.CompilerServices;
 
 namespace Shipwreck.FfmpegUtil
 {
     partial class BufferObject
     {
-        protected unsafe Boolean GetBoolean([CallerMemberName]string property = null)
-        {
-            Boolean r;
-            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(Boolean);
-        }
-
-        protected unsafe void SetValue(Boolean value, [CallerMemberName]string property = null)
-        {
-            var p = GetPropertyIndex(property);
-            if (value == default(Boolean))
-            {
-                RemoveValue(p);
-            }
-            else
-            {
-                SetValue(p, (short)sizeof(Boolean), (byte*)&value);
-            }
-        }
-
-        protected unsafe Boolean? GetNullableBoolean([CallerMemberName]string property = null)
-        {
-            Boolean r;
-            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Boolean?)null;
-        }
-
-        protected unsafe void SetValue(Boolean? value, [CallerMemberName]string property = null)
-        {
-            var p = GetPropertyIndex(property);
-            if (value == null)
-            {
-                RemoveValue(p);
-            }
-            else
-            {
-                var v = value.Value;
-                SetValue(p, (short)sizeof(Boolean), (byte*)&v);
-            }
-        }
-
         protected unsafe Byte GetByte([CallerMemberName]string property = null)
         {
             Byte r;
@@ -356,6 +318,45 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected unsafe Boolean GetBoolean([CallerMemberName]string property = null)
+        {
+            Boolean r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(Boolean);
+        }
+
+        protected unsafe void SetValue(Boolean value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == default(Boolean))
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                SetValue(p, (short)sizeof(Boolean), (byte*)&value);
+            }
+        }
+
+        protected unsafe Boolean? GetNullableBoolean([CallerMemberName]string property = null)
+        {
+            Boolean r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Boolean?)null;
+        }
+
+        protected unsafe void SetValue(Boolean? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Boolean), (byte*)&v);
+            }
+        }
+
         protected unsafe Single GetSingle([CallerMemberName]string property = null)
         {
             Single r;
@@ -591,4 +592,71 @@ namespace Shipwreck.FfmpegUtil
         }
 
     }
+	partial class StringBuilderHelper
+	{
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Byte value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, SByte value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Int16 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, UInt16 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Int32 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, UInt32 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Int64 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, UInt64 value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+	}
 }

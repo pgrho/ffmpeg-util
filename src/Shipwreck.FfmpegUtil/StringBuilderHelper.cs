@@ -4,22 +4,13 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    internal static class StringBuilderHelper
+    internal static partial class StringBuilderHelper
     {
         public static StringBuilder TrimEnd(this StringBuilder b)
         {
             if (b.Length > 0 && b[b.Length - 1] == ' ')
             {
                 b.Length--;
-            }
-            return b;
-        }
-
-        public static StringBuilder AppendIf(this StringBuilder b, string key, long value)
-        {
-            if (value != 0)
-            {
-                b.Append(key).Append(' ').Append(value).Append(' ');
             }
             return b;
         }

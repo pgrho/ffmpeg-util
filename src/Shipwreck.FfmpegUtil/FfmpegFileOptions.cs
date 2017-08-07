@@ -122,7 +122,12 @@ namespace Shipwreck.FfmpegUtil
             _Streams?.Clear();
         }
 
-        internal abstract void AppendArgs(StringBuilder builder);
+        internal virtual void AppendArgs(StringBuilder builder)
+        {
+            builder.AppendIf("-t", Duration);
+            builder.AppendIf("-ss", SeekTo);
+            builder.AppendIf("-sseof", SeekToLast);
+        }
 
         public override string ToString()
         {

@@ -1,5 +1,8 @@
 ﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.Linq" #>
 using System;
+using System.Text;
 using System.Runtime.CompilerServices;
 
 namespace Shipwreck.FfmpegUtil
@@ -7,7 +10,9 @@ namespace Shipwreck.FfmpegUtil
     partial class BufferObject
     {
 <#
-foreach (var T in new [] { "Boolean", "Byte", "SByte", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64", "Single", "Double", "Decimal", "DateTime", "DateTimeOffset", "TimeSpan" })
+var integers = new [] { "Byte", "SByte", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64" };
+
+foreach (var T in integers.Concat(new [] { "Boolean", "Single", "Double", "Decimal", "DateTime", "DateTimeOffset", "TimeSpan" }))
 {
 #>
         protected unsafe <#= T #> Get<#= T #>([CallerMemberName]string property = null)
@@ -53,4 +58,22 @@ foreach (var T in new [] { "Boolean", "Byte", "SByte", "Int16", "UInt16", "Int32
 }
 #>
     }
+	partial class StringBuilderHelper
+	{
+<#
+foreach (var T in integers)
+{
+#>
+        public static StringBuilder AppendIf(this StringBuilder b, string key, <#= T #> value)
+        {
+            if (value != 0)
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
+            }
+            return b;
+        }
+<#
+}
+#>
+	}
 }
