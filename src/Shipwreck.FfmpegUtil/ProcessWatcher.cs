@@ -16,11 +16,11 @@ namespace Shipwreck.FfmpegUtil
 
             var psi = process.StartInfo;
 
-            if (!psi.RedirectStandardOutput)
+            if (psi.RedirectStandardOutput)
             {
                 StandardOutput = new List<string>();
             }
-            if (!psi.RedirectStandardError)
+            if (psi.RedirectStandardError)
             {
                 StandardError = new List<string>();
             }
