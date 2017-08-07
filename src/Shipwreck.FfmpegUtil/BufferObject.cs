@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,24 +15,27 @@ namespace Shipwreck.FfmpegUtil
     public abstract partial class BufferObject
     {
         private static readonly Dictionary<Type, Dictionary<string, byte>> _PropertyIndexes = new Dictionary<Type, Dictionary<string, byte>>();
-        private readonly List<byte> _Data;
 
         internal BufferObject()
         {
-            _Data = new List<byte>();
+            Data = new List<byte>();
         }
 
         /// <summary>
         /// Gets a value indicating whether this instance contains any value.
         /// </summary>
         public virtual bool IsEmpty
-            => _Data?.Count > 0;
+            => Data?.Count > 0;
+
+        internal List<byte> Data { get; }
 
         public virtual void Clear()
-            => _Data?.Clear();
+            => Data?.Clear();
 
         private static bool IsSupportedType(Type type)
             => type.GetTypeInfo().IsValueType || type == typeof(string);
+
+        #region Property map
 
         protected static Dictionary<string, byte> GetPropertyIndexes(Type type)
         {
@@ -78,122 +82,179 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        private unsafe bool TryGetValue(byte propertyIndex, byte* buffer)
-        {
-            var i = 0;
-            while (i < _Data.Count)
-            {
-                var p = _Data[i++];
-                var s = _Data[i++] * 256 + _Data[i++];
+        internal byte GetPropertyIndex(string property)
+            => GetPropertyIndexes(GetType())[property];
 
-                if (p == propertyIndex)
+        #endregion Property map
+
+        #region Buffer Entry
+
+        public struct BufferEntry
+        {
+            internal BufferEntry(int index, byte property, short size)
+            {
+                Index = index;
+                Property = property;
+                Size = size;
+            }
+
+            public int Index { get; }
+            public byte Property { get; }
+            public short Size { get; }
+        }
+
+        public struct BufferEntryEnumerator : IEnumerator<BufferEntry>
+        {
+            private readonly List<byte> _Data;
+
+            private int i;
+
+            internal BufferEntryEnumerator(List<byte> data)
+            {
+                _Data = data;
+                i = -1;
+            }
+
+            public BufferEntry Current
+                => new BufferEntry(i, _Data[i], (short)(_Data[i + 1] * 256 + _Data[i + 2]));
+
+            object IEnumerator.Current
+                => Current;
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (i < 0)
                 {
-                    for (var j = 0; j < s; j++)
-                    {
-                        buffer[j] = _Data[i++];
-                    }
-                    return true;
+                    i = 0;
                 }
                 else
                 {
-                    i += s;
+                    var c = Current;
+                    i = c.Index + c.Size + 3;
+                }
+                return i < _Data.Count;
+            }
+
+            public void Reset()
+            {
+                i = -1;
+            }
+        }
+
+        public BufferEntryEnumerator GetEnumerator()
+            => new BufferEntryEnumerator(Data);
+
+        internal unsafe bool TryGetValue(byte propertyIndex, byte* buffer)
+        {
+            foreach (var e in this)
+            {
+                if (e.Property > propertyIndex)
+                {
+                    break;
+                }
+                else if (e.Property == propertyIndex)
+                {
+                    var s = e.Size;
+                    var i = e.Index + 3;
+
+                    for (var j = 0; j < s; j++)
+                    {
+                        buffer[j] = Data[i++];
+                    }
+                    return true;
                 }
             }
             return false;
         }
 
-        private unsafe string GetStringValue(byte propertyIndex)
+        internal unsafe string GetStringValue(byte propertyIndex)
         {
-            var i = 0;
-            while (i < _Data.Count)
+            foreach (var e in this)
             {
-                var p = _Data[i++];
-                var s = _Data[i++] * 256 + _Data[i++];
-
-                if (p == propertyIndex)
+                if (e.Property > propertyIndex)
                 {
+                    break;
+                }
+                else if (e.Property == propertyIndex)
+                {
+                    var s = e.Size;
                     var buf = new byte[s];
-                    _Data.CopyTo(i, buf, 0, buf.Length);
+                    Data.CopyTo(e.Index + 3, buf, 0, buf.Length);
 
                     return Encoding.UTF8.GetString(buf, 0, buf.Length);
-                }
-                else
-                {
-                    i += s;
                 }
             }
             return null;
         }
 
-        private unsafe void SetValue(byte propertyIndex, short size, byte* buffer)
+        internal unsafe void SetValue(byte propertyIndex, short size, byte* buffer)
         {
             var i = 0;
-            while (i < _Data.Count)
+            foreach (var e in this)
             {
-                var p = _Data[i++];
-                var s = _Data[i++] * 256 + _Data[i++];
-
-                if (p == propertyIndex)
+                if (e.Property > propertyIndex)
                 {
+                    break;
+                }
+                else if (e.Property == propertyIndex)
+                {
+                    var j = e.Index + 3;
+                    var s = e.Size;
                     if (s != size)
                     {
-                        _Data[i - 2] = (byte)(size >> 8);
-                        _Data[i - 1] = (byte)size;
+                        Data[j - 2] = (byte)(size >> 8);
+                        Data[j - 1] = (byte)size;
 
                         if (s > size)
                         {
-                            _Data.RemoveRange(i, s - size);
+                            Data.RemoveRange(j, s - size);
                         }
                         else
                         {
-                            _Data.InsertRange(i, Enumerable.Repeat(byte.MinValue, size - s));
+                            Data.InsertRange(j, Enumerable.Repeat(byte.MinValue, size - s));
                         }
                     }
 
-                    for (var j = 0; j < size; j++)
+                    for (var k = 0; k < size; k++)
                     {
-                        _Data[i++] = buffer[j];
+                        Data[j++] = buffer[k];
                     }
                     return;
                 }
-                else
-                {
-                    i += s;
-                }
+                i = e.Index + e.Size + 3;
             }
-            _Data.Insert(i++, propertyIndex);
-            _Data.Insert(i++, (byte)(size >> 8));
-            _Data.Insert(i++, (byte)size);
+            Data.Insert(i++, propertyIndex);
+            Data.Insert(i++, (byte)(size >> 8));
+            Data.Insert(i++, (byte)size);
 
             for (var j = 0; j < size; j++)
             {
-                _Data.Insert(i++, buffer[j]);
+                Data.Insert(i++, buffer[j]);
             }
         }
 
-        private unsafe bool RemoveValue(byte propertyIndex)
+        internal unsafe bool RemoveValue(byte propertyIndex)
         {
-            var i = 0;
-            while (i < _Data.Count)
+            foreach (var e in this)
             {
-                var p = _Data[i++];
-                var s = _Data[i++] * 256 + _Data[i++];
-
-                if (p == propertyIndex)
+                if (e.Property > propertyIndex)
                 {
-                    _Data.RemoveRange(i - 3, s + 3);
-                    return true;
+                    break;
                 }
-                else
+                else if (e.Property == propertyIndex)
                 {
-                    i += s;
+                    Data.RemoveRange(e.Index, e.Size + 3);
+                    return true;
                 }
             }
             return false;
         }
 
-        private byte GetPropertyIndex(string property)
-            => GetPropertyIndexes(GetType())[property];
+        #endregion Buffer Entry
 
         protected string GetString([CallerMemberName]string property = null)
             => GetStringValue(GetPropertyIndex(property));
