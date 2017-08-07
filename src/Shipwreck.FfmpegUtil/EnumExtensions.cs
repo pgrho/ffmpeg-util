@@ -34,7 +34,9 @@ namespace Shipwreck.FfmpegUtil
                 case LogLevel.Quiet:
                     return "quiet";
 
+#pragma warning disable CS0618 // 型またはメンバーが古い形式です
                 case LogLevel.Panic:
+#pragma warning restore CS0618 // 型またはメンバーが古い形式です
                     return "panic";
 
                 case LogLevel.Fatal:
