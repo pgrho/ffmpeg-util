@@ -42,6 +42,13 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(null)]
+        public string ShowEntries
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
         internal override void AppendArgs(StringBuilder builder)
         {
             builder.AppendFilePath(FilePath);
@@ -51,8 +58,8 @@ namespace Shipwreck.FfmpegUtil
             builder.AppendIf("-hide_banner", HideBanner);
             builder.AppendIf("-show_format", ShowFormat);
             builder.AppendIf("-show_streams", ShowStreams);
-
             builder.AppendIf("-select_streams", SelectStreams);
+            builder.AppendIf("-show_entries", ShowEntries);
         }
     }
 }

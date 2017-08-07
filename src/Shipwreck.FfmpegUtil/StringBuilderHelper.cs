@@ -17,11 +17,22 @@ namespace Shipwreck.FfmpegUtil
             return b;
         }
 
-        public static StringBuilder TrimEnd(this StringBuilder b)
+        public static StringBuilder TrimEnd(this StringBuilder b, char @char = ' ')
         {
-            if (b.Length > 0 && b[b.Length - 1] == ' ')
+            while (b.Length > 0 && b[b.Length - 1] == @char)
             {
                 b.Length--;
+            }
+            return b;
+        }
+
+        #region AppendIf
+
+        public static StringBuilder AppendIf(this StringBuilder b, string key, string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                b.Append(key).Append(' ').Append(value).Append(' ');
             }
             return b;
         }
@@ -52,6 +63,8 @@ namespace Shipwreck.FfmpegUtil
             }
             return b;
         }
+
+        #endregion AppendIf
 
         public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, string value)
         {

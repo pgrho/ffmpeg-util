@@ -59,5 +59,15 @@ namespace Shipwreck.FfmpegUtil
             Assert.Equal(value, target.SelectStreams);
             Assert.Equal("-select_streams V:0", target.ToString());
         }
+
+        [Fact]
+        public void ShowEntriesTest()
+        {
+            var target = new FfprobeArgs();
+            var value = "default";
+            target.ShowEntries = value;
+            Assert.Equal(value, target.ShowEntries);
+            Assert.Equal("-show_entries default", target.ToString());
+        }
     }
 }
