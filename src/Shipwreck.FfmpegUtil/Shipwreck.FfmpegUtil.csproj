@@ -11,9 +11,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="Generated Codes\BufferObject.tt">
+    <None Update="Generated Codes\ValueTypeMethods.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BufferObject.cs</LastGenOutput>
+      <LastGenOutput>ValueTypeMethods.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -22,10 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Generated Codes\BufferObject.cs">
+    <Compile Update="Generated Codes\ValueTypeMethods.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>BufferObject.tt</DependentUpon>
+      <DependentUpon>ValueTypeMethods.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
