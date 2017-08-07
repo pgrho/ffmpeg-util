@@ -4,6 +4,10 @@ namespace Shipwreck.FfmpegUtil
 {
     public abstract class CommandLineArgs : BufferObject
     {
+        internal CommandLineArgs()
+        {
+        }
+
         internal abstract void AppendArgs(StringBuilder builder);
 
         public override string ToString()

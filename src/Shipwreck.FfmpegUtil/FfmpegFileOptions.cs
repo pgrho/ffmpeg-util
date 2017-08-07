@@ -5,6 +5,10 @@ namespace Shipwreck.FfmpegUtil
 {
     public abstract class FfmpegFileOptions : BufferObject
     {
+        internal FfmpegFileOptions()
+        {
+        }
+
         public string FilePath
         {
             get => GetString();

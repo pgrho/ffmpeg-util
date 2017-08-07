@@ -11,7 +11,12 @@ namespace Shipwreck.FfmpegUtil
     public abstract partial class BufferObject
     {
         private static readonly Dictionary<Type, Dictionary<string, byte>> _PropertyIndexes = new Dictionary<Type, Dictionary<string, byte>>();
-        private readonly List<byte> _Data = new List<byte>();
+        private readonly List<byte> _Data;
+
+        internal BufferObject()
+        {
+            _Data = new List<byte>();
+        }
 
         protected static Dictionary<string, byte> GetPropertyIndexes(Type type)
         {
