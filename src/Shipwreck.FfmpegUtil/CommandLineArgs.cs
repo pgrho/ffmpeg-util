@@ -64,5 +64,4 @@ namespace Shipwreck.FfmpegUtil
             return sb.ToString();
         }
     }
-
 }

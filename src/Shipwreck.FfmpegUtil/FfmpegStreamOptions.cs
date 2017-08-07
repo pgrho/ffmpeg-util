@@ -6,6 +6,8 @@ namespace Shipwreck.FfmpegUtil
 {
     public abstract class FfmpegStreamOptions : BufferObject
     {
+        #region Stream specifier
+
         private byte _StreamIndex = byte.MaxValue;
 
         [DefaultValue(FfmpegStreamType.All)]
@@ -49,34 +51,7 @@ namespace Shipwreck.FfmpegUtil
                 }
                 else
                 {
-                    char ts;
-                    switch (StreamType)
-                    {
-                        case FfmpegStreamType.Video:
-                            ts = 'V';
-                            break;
-
-                        case FfmpegStreamType.AllVideo:
-                            ts = 'v';
-                            break;
-
-                        case FfmpegStreamType.Audio:
-                            ts = 'a';
-                            break;
-
-                        case FfmpegStreamType.Subtitle:
-                            ts = 's';
-                            break;
-
-                        case FfmpegStreamType.Data:
-                            ts = 'd';
-                            break;
-
-                        case FfmpegStreamType.Attachments:
-                        default:
-                            ts = 't';
-                            break;
-                    }
+                    var ts = StreamType.ToArg();
 
                     if (_StreamIndex == byte.MaxValue)
                     {
@@ -90,7 +65,20 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        #endregion Stream specifier
+
+        [DefaultValue(null)]
         public string Codec
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
+        /// <summary>
+        /// Gets or sets the disposition for a stream.
+        /// </summary>
+        [DefaultValue(null)]
+        public string Disposition
         {
             get => GetString();
             set => SetValue(value);
@@ -100,6 +88,18 @@ namespace Shipwreck.FfmpegUtil
         {
             var ss = StreamSpecifier;
             builder.AppendIfStream("-c", ss, Codec);
+
+            builder.AppendIfStream("-disposition", ss, Disposition);
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            AppendArgs(sb);
+
+            sb.TrimEnd();
+            return sb.ToString();
         }
     }
 }

@@ -2,6 +2,31 @@ namespace Shipwreck.FfmpegUtil
 {
     public static class EnumExtensions
     {
+        public static char ToArg(this FfmpegStreamType value)
+        {
+            switch (value)
+            {
+                case FfmpegStreamType.Video:
+                    return 'V';
+
+                case FfmpegStreamType.AllVideo:
+                    return 'v';
+
+                case FfmpegStreamType.Audio:
+                    return 'a';
+
+                case FfmpegStreamType.Subtitle:
+                    return 's';
+
+                case FfmpegStreamType.Data:
+                    return 'd';
+
+                case FfmpegStreamType.Attachments:
+                default:
+                    return 't';
+            }
+        }
+
         public static string ToArg(this LogLevel value)
         {
             switch (value)

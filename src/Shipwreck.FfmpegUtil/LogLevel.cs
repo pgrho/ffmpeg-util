@@ -28,12 +28,14 @@ namespace Shipwreck.FfmpegUtil
         Error = 4,
 
         /// <summary>
-        /// Show all warnings and errors. Any message related to possibly incorrect or unexpected events will be shown.
+        /// Show all warnings and errors. Any message related to possibly incorrect or unexpected
+        /// events will be shown.
         /// </summary>
         Warning = 5,
 
         /// <summary>
-        /// Show informative messages during processing. This is in addition to warnings and errors. This is the default value.
+        /// Show informative messages during processing. This is in addition to warnings and errors.
+        /// This is the default value.
         /// </summary>
         Info = 6,
 
