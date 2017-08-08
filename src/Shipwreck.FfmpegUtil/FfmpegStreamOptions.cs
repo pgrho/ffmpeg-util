@@ -7,6 +7,7 @@ namespace Shipwreck.FfmpegUtil
     {
         #region Stream specifier
 
+        [IgnoreBuffer]
         public FfmpegStreamType StreamType
         {
             get => StreamSpecifier.Type;
@@ -17,6 +18,7 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        [IgnoreBuffer]
         public byte? StreamIndex
         {
             get => StreamSpecifier.Index;
@@ -27,7 +29,11 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        public StreamSpecifier StreamSpecifier { get; set; }
+        public StreamSpecifier StreamSpecifier
+        {
+            get => GetStreamSpecifier();
+            set => SetValue(value);
+        }
 
         #endregion Stream specifier
 
