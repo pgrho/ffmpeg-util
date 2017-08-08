@@ -42,6 +42,13 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(false)]
+        public bool ShowFrames
+        {
+            get => GetBoolean();
+            set => SetValue(value);
+        }
+
         [DefaultValue(null)]
         public string ShowEntries
         {
@@ -70,9 +77,10 @@ namespace Shipwreck.FfmpegUtil
             base.AppendArgs(builder);
 
             builder.AppendIf("-hide_banner", HideBanner);
+            builder.AppendIf("-select_streams", SelectStreams);
             builder.AppendIf("-show_format", ShowFormat);
             builder.AppendIf("-show_streams", ShowStreams);
-            builder.AppendIf("-select_streams", SelectStreams);
+            builder.AppendIf("-show_frames", ShowFrames);
             builder.AppendIf("-show_entries", ShowEntries);
             builder.AppendIf("-of", PrintFormat);
             builder.AppendIf("-skip_frame", SkipFrame);

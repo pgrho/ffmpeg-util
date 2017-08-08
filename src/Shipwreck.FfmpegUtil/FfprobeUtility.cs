@@ -194,5 +194,50 @@ namespace Shipwreck.FfmpegUtil
 
             return format;
         }
+
+
+        public static async Task<float[]> GetKeyFramesAsync(string fileName, string executable)
+        {
+            var psi = new ProcessStartInfo(executable ?? "ffprobe");
+            psi.CreateNoWindow = true;
+            psi.UseShellExecute = false;
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardInput = false;
+            psi.Arguments = new FfprobeArgs()
+            {
+                FilePath = Path.GetFullPath(fileName),
+                HideBanner = true,
+                SelectStreams = new StreamSpecifier(FfmpegStreamType.AllVideo, 0),
+                ShowFrames = true,
+                ShowEntries = new FfprobeSectionCollection() {
+                    new FfprobeSection (){
+                        Name="frame",
+                        Entries = new[]{ "pkt_pts_time" }
+                    }
+                }.ToString(),
+                PrintFormat = "csv",
+                SkipFrame = "nokey"
+            }.ToString();
+
+            var po = ProcessWatcher.Start(psi);
+
+            await po.Task.ConfigureAwait(false);
+
+            if (po.Process.ExitCode != 0 || !po.StandardOutput.Any())
+            {
+                throw new Exception();
+            }
+            var frames = new List<float>();
+            foreach (var l in po.StandardOutput)
+            {
+                var m = Regex.Match(l, @"^frame,\d+\.\d+$");
+                var v = float.Parse(l.Substring(6));
+
+                frames.Add(v);
+            }
+
+            return frames.Distinct().ToArray();
+        }
     }
 }

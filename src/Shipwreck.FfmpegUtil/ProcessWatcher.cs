@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,19 +17,29 @@ namespace Shipwreck.FfmpegUtil
 
             var psi = process.StartInfo;
 
+            var tasks = new List<Task>(3);
             if (psi.RedirectStandardOutput)
             {
                 StandardOutput = new List<string>();
+                var stdout = new Task(() => Watch(Process.StandardOutput, StandardOutput), TaskCreationOptions.LongRunning);
+                stdout.Start();
+                tasks.Add(stdout);
             }
             if (psi.RedirectStandardError)
             {
                 StandardError = new List<string>();
+                var stdout = new Task(() => Watch(Process.StandardError, StandardError), TaskCreationOptions.LongRunning);
+                stdout.Start();
+                tasks.Add(stdout);
             }
 
-            if (StandardOutput != null || StandardError != null)
+            if (tasks.Count > 1)
             {
-                Task = new Task(Watch, TaskCreationOptions.LongRunning);
-                Task.Start();
+                Task = Task.WhenAll(tasks);
+            }
+            else if (tasks.Count == 1)
+            {
+                Task = tasks[0];
             }
             else
             {
@@ -53,37 +64,11 @@ namespace Shipwreck.FfmpegUtil
         public static ProcessWatcher Start(ProcessStartInfo psi, CancellationToken cancellationToken = default(CancellationToken))
             => new ProcessWatcher(Process.Start(psi), cancellationToken);
 
-        private void Watch()
+        private void Watch(StreamReader r, ICollection<string> collection)
         {
-            for (;;)
+            for (var l = r.ReadLine(); l != null; l = r.ReadLine())
             {
-                _CancellationToken.ThrowIfCancellationRequested();
-
-                var ol = StandardOutput != null ? Process.StandardOutput.ReadLine() : null;
-                var el = StandardError != null ? Process.StandardError.ReadLine() : null;
-
-                if (ol != null)
-                {
-                    StandardOutput.Add(ol);
-                }
-                if (el != null)
-                {
-                    StandardError.Add(el);
-                }
-
-                if (ol != null || el != null)
-                {
-                    continue;
-                }
-
-                if (Process.HasExited)
-                {
-                    break;
-                }
-                else
-                {
-                    Thread.Sleep(1);
-                }
+                collection.Add(l);
             }
         }
     }
