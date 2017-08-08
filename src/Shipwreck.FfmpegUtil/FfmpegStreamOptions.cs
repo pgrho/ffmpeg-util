@@ -1,10 +1,9 @@
-using System;
 using System.ComponentModel;
 using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public sealed class FfmpegStreamOptions : BufferObject
+    public class FfmpegStreamOptions : BufferObject
     {
         #region Stream specifier
 
@@ -17,6 +16,7 @@ namespace Shipwreck.FfmpegUtil
                 StreamSpecifier = new StreamSpecifier(value, ss.Index);
             }
         }
+
         public byte? StreamIndex
         {
             get => StreamSpecifier.Index;
@@ -48,6 +48,27 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(0f)]
+        public float FrameRate
+        {
+            get => GetSingle();
+            set => SetValue(value);
+        }
+
+        [DefaultValue((short)0)]
+        public short FrameWidth
+        {
+            get => GetInt16();
+            set => SetValue(value);
+        }
+
+        [DefaultValue((short)0)]
+        public short FrameHeight
+        {
+            get => GetInt16();
+            set => SetValue(value);
+        }
+
         [DefaultValue(0)]
         public int FrameCount
         {
@@ -62,13 +83,29 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
-        internal void AppendArgs(StringBuilder builder)
+        [DefaultValue(0)]
+        public int BitRate
+        {
+            get => GetInt32();
+            set => SetValue(value);
+        }
+
+        internal virtual void AppendArgs(StringBuilder builder)
         {
             var ss = StreamSpecifier.ToString();
             builder.AppendIfStream("-c", ss, Codec);
             builder.AppendIfStream("-frames", ss, FrameCount);
-            builder.AppendIfStream("-q", ss, QualityScale);
+            builder.AppendIfStream("-r", ss, FrameRate);
 
+            var w = FrameWidth;
+            var h = FrameHeight;
+            if (w > 0 && h > 0)
+            {
+                builder.AppendIfStream("-s", ss, w + "x" + h);
+            }
+
+            builder.AppendIfStream("-b", ss, BitRate);
+            builder.AppendIfStream("-q", ss, QualityScale);
             builder.AppendIfStream("-disposition", ss, Disposition);
         }
 

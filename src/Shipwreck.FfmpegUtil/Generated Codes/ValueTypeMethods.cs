@@ -318,45 +318,6 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        protected unsafe Boolean GetBoolean([CallerMemberName]string property = null)
-        {
-            Boolean r;
-            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(Boolean);
-        }
-
-        protected unsafe void SetValue(Boolean value, [CallerMemberName]string property = null)
-        {
-            var p = GetPropertyIndex(property);
-            if (value == default(Boolean))
-            {
-                RemoveValue(p);
-            }
-            else
-            {
-                SetValue(p, (short)sizeof(Boolean), (byte*)&value);
-            }
-        }
-
-        protected unsafe Boolean? GetNullableBoolean([CallerMemberName]string property = null)
-        {
-            Boolean r;
-            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Boolean?)null;
-        }
-
-        protected unsafe void SetValue(Boolean? value, [CallerMemberName]string property = null)
-        {
-            var p = GetPropertyIndex(property);
-            if (value == null)
-            {
-                RemoveValue(p);
-            }
-            else
-            {
-                var v = value.Value;
-                SetValue(p, (short)sizeof(Boolean), (byte*)&v);
-            }
-        }
-
         protected unsafe Single GetSingle([CallerMemberName]string property = null)
         {
             Single r;
@@ -432,6 +393,45 @@ namespace Shipwreck.FfmpegUtil
             {
                 var v = value.Value;
                 SetValue(p, (short)sizeof(Double), (byte*)&v);
+            }
+        }
+
+        protected unsafe Boolean GetBoolean([CallerMemberName]string property = null)
+        {
+            Boolean r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : default(Boolean);
+        }
+
+        protected unsafe void SetValue(Boolean value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == default(Boolean))
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                SetValue(p, (short)sizeof(Boolean), (byte*)&value);
+            }
+        }
+
+        protected unsafe Boolean? GetNullableBoolean([CallerMemberName]string property = null)
+        {
+            Boolean r;
+            return TryGetValue(GetPropertyIndex(property), (byte*)&r) ? r : (Boolean?)null;
+        }
+
+        protected unsafe void SetValue(Boolean? value, [CallerMemberName]string property = null)
+        {
+            var p = GetPropertyIndex(property);
+            if (value == null)
+            {
+                RemoveValue(p);
+            }
+            else
+            {
+                var v = value.Value;
+                SetValue(p, (short)sizeof(Boolean), (byte*)&v);
             }
         }
 
@@ -871,6 +871,60 @@ namespace Shipwreck.FfmpegUtil
 
                 b.Append(' ');
                 b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Single value, string format = "0.###")
+        {
+            if (value != default(Single))
+            {
+                b.Append(key).Append(' ').Append(value.ToString(format)).Append(' ');
+            }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Single value, string format = "0.###")
+        {
+            if (value != default(Single))
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value.ToString(format));
+                b.Append(' ');
+            }
+
+            return b;
+        }
+        public static StringBuilder AppendIf(this StringBuilder b, string key, Double value, string format = "0.###")
+        {
+            if (value != default(Double))
+            {
+                b.Append(key).Append(' ').Append(value.ToString(format)).Append(' ');
+            }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, Double value, string format = "0.###")
+        {
+            if (value != default(Double))
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value.ToString(format));
                 b.Append(' ');
             }
 

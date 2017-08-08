@@ -25,6 +25,13 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(null)]
+        public string Format
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
         public TimeSpan Duration
         {
             get => GetTimeSpan();
@@ -127,6 +134,7 @@ namespace Shipwreck.FfmpegUtil
 
         internal virtual void AppendArgs(StringBuilder builder)
         {
+            builder.AppendIf("-f", Format);
             builder.AppendIf("-t", Duration);
             builder.AppendIf("-ss", SeekTo);
             builder.AppendIf("-sseof", SeekToLast);

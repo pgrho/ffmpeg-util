@@ -11,9 +11,10 @@ namespace Shipwreck.FfmpegUtil
     {
 <#
 var integers = new [] { "Byte", "SByte", "Int16", "UInt16", "Int32", "UInt32", "Int64", "UInt64" };
+var floats = new [] { "Single", "Double" };
 var structs = new [] { "Decimal", "DateTime", "DateTimeOffset", "TimeSpan", "StreamSpecifier" };
 
-foreach (var T in integers.Concat(new [] { "Boolean", "Single", "Double" }).Concat(structs))
+foreach (var T in integers.Concat(floats).Concat(new [] { "Boolean" }).Concat(structs))
 {
 #>
         protected unsafe <#= T #> Get<#= T #>([CallerMemberName]string property = null)
@@ -87,6 +88,38 @@ foreach (var T in integers.Concat(new [] { "StreamSpecifier" }))
 
                 b.Append(' ');
                 b.Append(value);
+                b.Append(' ');
+            }
+
+            return b;
+        }
+<#
+}
+foreach (var T in floats)
+{
+#>
+        public static StringBuilder AppendIf(this StringBuilder b, string key, <#= T #> value, string format = "0.###")
+        {
+            if (value != default(<#= T #>))
+            {
+                b.Append(key).Append(' ').Append(value.ToString(format)).Append(' ');
+            }
+            return b;
+        }
+
+        public static StringBuilder AppendIfStream(this StringBuilder b, string key, string streamSpecifier, <#= T #> value, string format = "0.###")
+        {
+            if (value != default(<#= T #>))
+            {
+                b.Append(key);
+                if (!string.IsNullOrEmpty(streamSpecifier))
+                {
+                    b.Append(':');
+                    b.Append(streamSpecifier);
+                }
+
+                b.Append(' ');
+                b.Append(value.ToString(format));
                 b.Append(' ');
             }
 

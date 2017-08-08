@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public sealed class FfmpegArgs : CommandLineArgs
+    public class FfmpegArgs : CommandLineArgs
     {
         public override bool IsEmpty
             => base.IsEmpty
