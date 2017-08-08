@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shipwreck.FfmpegUtil
 {
-    public abstract class FfmpegStreamOptions : BufferObject
+    public sealed class FfmpegStreamOptions : BufferObject
     {
         #region Stream specifier
 
@@ -62,7 +62,7 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
-        internal virtual void AppendArgs(StringBuilder builder)
+        internal void AppendArgs(StringBuilder builder)
         {
             var ss = StreamSpecifier.ToString();
             builder.AppendIfStream("-c", ss, Codec);

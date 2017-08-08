@@ -7,7 +7,7 @@ namespace Shipwreck.FfmpegUtil
         [Fact]
         public void DispositionTest()
         {
-            var target = new FfmpegVideoStreamOptions();
+            var target = new FfmpegStreamOptions();
             target.StreamType = FfmpegStreamType.Video;
             Assert.Null(target.Disposition);
 
@@ -20,7 +20,7 @@ namespace Shipwreck.FfmpegUtil
         [Fact]
         public void FrameCountTest()
         {
-            var target = new FfmpegVideoStreamOptions();
+            var target = new FfmpegStreamOptions();
             target.StreamType = FfmpegStreamType.Video;
             Assert.Equal(0, target.FrameCount);
 
@@ -33,7 +33,7 @@ namespace Shipwreck.FfmpegUtil
         [Fact]
         public void QualityScaleTest()
         {
-            var target = new FfmpegVideoStreamOptions();
+            var target = new FfmpegStreamOptions();
             target.StreamType = FfmpegStreamType.Video;
             Assert.Equal(0, target.QualityScale);
 

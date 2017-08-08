@@ -60,13 +60,12 @@ namespace Shipwreck.FfmpegUtil
 
         #endregion Streams
 
-        private T GetStreamOptions<T>(FfmpegStreamType type)
-            where T : FfmpegStreamOptions, new()
+        private FfmpegStreamOptions GetStreamOptions(FfmpegStreamType type)
         {
-            var r = _Streams?.OfType<T>().FirstOrDefault(s => s.StreamType == type && s.StreamIndex == null);
+            var r = _Streams?.FirstOrDefault(s => s.StreamType == type && s.StreamIndex == null);
             if (r == null)
             {
-                r = new T()
+                r = new FfmpegStreamOptions()
                 {
                     StreamType = type
                 };
@@ -77,10 +76,9 @@ namespace Shipwreck.FfmpegUtil
             return r;
         }
 
-        private void SetStreamOptions<T>(T value, FfmpegStreamType type)
-            where T : FfmpegStreamOptions, new()
+        private void SetStreamOptions(FfmpegStreamOptions value, FfmpegStreamType type)
         {
-            var current = _Streams?.OfType<T>().Where(s => s.StreamType == type && s.StreamIndex == null).ToArray();
+            var current = _Streams?.Where(s => s.StreamType == type && s.StreamIndex == null).ToArray();
 
             if (current != null)
             {
@@ -101,21 +99,21 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
-        public FfmpegVideoStreamOptions AllStream
+        public FfmpegStreamOptions AllStream
         {
-            get => GetStreamOptions<FfmpegVideoStreamOptions>(FfmpegStreamType.All);
+            get => GetStreamOptions(FfmpegStreamType.All);
             set => SetStreamOptions(value, FfmpegStreamType.All);
         }
 
-        public FfmpegVideoStreamOptions VideoStream
+        public FfmpegStreamOptions VideoStream
         {
-            get => GetStreamOptions<FfmpegVideoStreamOptions>(FfmpegStreamType.Video);
+            get => GetStreamOptions(FfmpegStreamType.Video);
             set => SetStreamOptions(value, FfmpegStreamType.Video);
         }
 
-        public FfmpegAudioStreamOptions AudioStream
+        public FfmpegStreamOptions AudioStream
         {
-            get => GetStreamOptions<FfmpegAudioStreamOptions>(FfmpegStreamType.Audio);
+            get => GetStreamOptions(FfmpegStreamType.Audio);
             set => SetStreamOptions(value, FfmpegStreamType.Audio);
         }
 
