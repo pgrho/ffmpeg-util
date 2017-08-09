@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
@@ -7,25 +8,15 @@ namespace Shipwreck.FfmpegUtil
 {
     public sealed class FfprobeSection
     {
-        private List<string> _Entries;
+        private Collection<string> _Entries;
 
         [DefaultValue(null)]
         public string Name { get; set; }
 
         public IList<string> Entries
         {
-            get => _Entries ?? (_Entries = new List<string>());
-            set
-            {
-                if (value != _Entries)
-                {
-                    _Entries?.Clear();
-                    if (value?.Count > 0)
-                    {
-                        ((List<string>)Entries).AddRange(value);
-                    }
-                }
-            }
+            get => CollectionHelper.GetCollection(ref _Entries);
+            set => CollectionHelper.SetCollection(ref _Entries, value);
         }
 
         public bool ShouldSerializeEntries()
