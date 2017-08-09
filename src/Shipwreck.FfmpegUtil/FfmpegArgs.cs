@@ -20,6 +20,13 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(default(VSync))]
+        public VSync VSync
+        {
+            get => GetEnum<VSync>();
+            set => SetValue(value);
+        }
+
         #region InputOptions
 
         public FfmpegInputOptions InputOptions { get; set; }
@@ -60,6 +67,11 @@ namespace Shipwreck.FfmpegUtil
             if (oof != null)
             {
                 builder.Append(oof.Value ? "-y " : "-n ");
+            }
+            var vs = VSync;
+            if (vs != VSync.Auto)
+            {
+                builder.AppendIf("-vsync", vs.ToArg());
             }
 
             InputOptions?.AppendArgs(builder);

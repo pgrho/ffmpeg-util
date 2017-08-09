@@ -61,5 +61,29 @@ namespace Shipwreck.FfmpegUtil
                     return value.ToString().ToLowerInvariant();
             }
         }
+
+        public static string ToArg(this VSync value)
+        {
+            switch (value)
+            {
+                case VSync.Auto:
+                    return "auto";
+
+                case VSync.Passthrough:
+                    return "passthrough";
+
+                case VSync.ConstantFrameRate:
+                    return "cfr";
+
+                case VSync.VariableFrameRate:
+                    return "vfr";
+
+                case VSync.Drop:
+                    return "drop";
+
+                default:
+                    return value.ToString().ToLowerInvariant();
+            }
+        }
     }
 }

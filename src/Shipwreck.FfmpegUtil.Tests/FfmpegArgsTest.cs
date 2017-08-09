@@ -15,6 +15,16 @@ namespace Shipwreck.FfmpegUtil
         }
 
         [Fact]
+        public void VSyncTest()
+        {
+            var target = new FfmpegArgs();
+            Assert.Equal(VSync.Auto, target.VSync);
+            target.VSync = VSync.ConstantFrameRate;
+            Assert.Equal(VSync.ConstantFrameRate, target.VSync);
+            Assert.Equal("-vsync cfr", target.ToString());
+        }
+
+        [Fact]
         public void OverwriteOutputFilesTest_False()
         {
             var target = new FfmpegArgs();
