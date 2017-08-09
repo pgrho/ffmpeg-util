@@ -630,6 +630,85 @@ namespace Shipwreck.FfmpegUtil
             }
         }
 
+        protected T GetEnum<T>([CallerMemberName]string property = null)
+            where T : struct
+        {
+            var ut = Enum.GetUnderlyingType(typeof(T));
+
+            switch (ut.Name)
+            {
+                case "Byte":
+                    return (T)(object)GetByte(property);
+
+                case "SByte":
+                    return (T)(object)GetSByte(property);
+
+                case "Int16":
+                    return (T)(object)GetInt16(property);
+
+                case "UInt16":
+                    return (T)(object)GetUInt16(property);
+
+                case "Int32":
+                    return (T)(object)GetInt32(property);
+
+                case "UInt32":
+                    return (T)(object)GetUInt32(property);
+
+                case "Int64":
+                    return (T)(object)GetInt64(property);
+
+                case "UInt64":
+                    return (T)(object)GetUInt64(property);
+
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        protected unsafe void SetValue<T>(T value, [CallerMemberName]string property = null)
+            where T : struct
+        {
+            var ut = Enum.GetUnderlyingType(typeof(T));
+			
+            switch (ut.Name)
+            {
+                case "Byte":
+                    SetValue((Byte)(object)value, property);
+                    break;
+
+                case "SByte":
+                    SetValue((SByte)(object)value, property);
+                    break;
+
+                case "Int16":
+                    SetValue((Int16)(object)value, property);
+                    break;
+
+                case "UInt16":
+                    SetValue((UInt16)(object)value, property);
+                    break;
+
+                case "Int32":
+                    SetValue((Int32)(object)value, property);
+                    break;
+
+                case "UInt32":
+                    SetValue((UInt32)(object)value, property);
+                    break;
+
+                case "Int64":
+                    SetValue((Int64)(object)value, property);
+                    break;
+
+                case "UInt64":
+                    SetValue((UInt64)(object)value, property);
+                    break;
+
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 	partial class StringBuilderHelper
 	{

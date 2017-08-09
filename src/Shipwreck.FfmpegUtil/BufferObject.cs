@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Shipwreck.FfmpegUtil
@@ -273,60 +272,6 @@ namespace Shipwreck.FfmpegUtil
                 {
                     SetValue(p, (short)d.Length, b);
                 }
-            }
-        }
-
-        protected T GetEnum<T>([CallerMemberName]string property = null)
-            where T : struct //, IConvertible
-        {
-            var ut = Enum.GetUnderlyingType(typeof(T));
-
-            switch (Marshal.SizeOf(ut))
-            {
-                case 1:
-                    return (T)(object)GetByte(property);
-
-                case 2:
-                    return (T)(object)GetInt16(property);
-
-                case 4:
-                    return (T)(object)GetInt32(property);
-
-                case 8:
-                    return (T)(object)GetInt64(property);
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
-
-        protected unsafe void SetValue<T>(T value, [CallerMemberName]string property = null)
-            where T : struct //, IConvertible
-        {
-            // TODO: use IConvertible
-
-            var ut = Enum.GetUnderlyingType(typeof(T));
-
-            switch (Marshal.SizeOf(ut))
-            {
-                case 1:
-                    SetValue((byte)(object)value, property);
-                    break;
-
-                case 2:
-                    SetValue((short)(object)value, property);
-                    break;
-
-                case 4:
-                    SetValue((int)(object)value, property);
-                    break;
-
-                case 8:
-                    SetValue((long)(object)value, property);
-                    break;
-
-                default:
-                    throw new NotSupportedException();
             }
         }
     }

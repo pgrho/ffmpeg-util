@@ -59,6 +59,50 @@ foreach (var T in integers.Concat(floats).Concat(new [] { "Boolean" }).Concat(st
 <#
 }
 #>
+        protected T GetEnum<T>([CallerMemberName]string property = null)
+            where T : struct
+        {
+            var ut = Enum.GetUnderlyingType(typeof(T));
+
+            switch (ut.Name)
+            {
+<#
+foreach (var T in integers)
+{
+#>
+                case "<#= T #>":
+                    return (T)(object)Get<#= T #>(property);
+
+<#
+}
+#>
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
+        protected unsafe void SetValue<T>(T value, [CallerMemberName]string property = null)
+            where T : struct
+        {
+            var ut = Enum.GetUnderlyingType(typeof(T));
+			
+            switch (ut.Name)
+            {
+<#
+foreach (var T in integers)
+{
+#>
+                case "<#= T #>":
+                    SetValue((<#= T #>)(object)value, property);
+                    break;
+
+<#
+}
+#>
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 	partial class StringBuilderHelper
 	{
