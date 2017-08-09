@@ -5,6 +5,19 @@ namespace Shipwreck.FfmpegUtil
     public class FfmpegStreamOptionsTest
     {
         [Fact]
+        public void FilterTest()
+        {
+            var target = new FfmpegStreamOptions();
+            target.StreamType = FfmpegStreamType.Video;
+            Assert.Null(target.Filter);
+
+            var value = "default";
+            target.Filter = value;
+            Assert.Equal(value, target.Filter);
+            Assert.Equal("-filter:V default", target.ToString());
+        }
+
+        [Fact]
         public void DispositionTest()
         {
             var target = new FfmpegStreamOptions();

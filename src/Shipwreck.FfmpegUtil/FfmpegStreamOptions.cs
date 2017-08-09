@@ -96,6 +96,13 @@ namespace Shipwreck.FfmpegUtil
             set => SetValue(value);
         }
 
+        [DefaultValue(null)]
+        public string Filter
+        {
+            get => GetString();
+            set => SetValue(value);
+        }
+
         internal virtual void AppendArgs(StringBuilder builder)
         {
             var ss = StreamSpecifier.ToString();
@@ -112,6 +119,7 @@ namespace Shipwreck.FfmpegUtil
 
             builder.AppendIfStream("-b", ss, BitRate);
             builder.AppendIfStream("-q", ss, QualityScale);
+            builder.AppendIfStream("-filter", ss, Filter);
             builder.AppendIfStream("-disposition", ss, Disposition);
         }
 
