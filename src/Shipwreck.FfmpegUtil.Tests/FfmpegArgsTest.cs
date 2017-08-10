@@ -33,5 +33,35 @@ namespace Shipwreck.FfmpegUtil
             Assert.False(target.OverwriteOutputFiles);
             Assert.Equal("-n", target.ToString());
         }
+
+        [Fact]
+        public void ToStringTest_Complex()
+        {
+            var target = new FfmpegArgs()
+            {
+                InputOptions = new FfmpegInputOptions()
+                {
+                    FilePath = "INPUT"
+                },
+                OutputOptions = new FfmpegOutputOptions()
+                {
+                    FilePath = "OUTPUT",
+                    AllStream = new FfmpegStreamOptions()
+                    {
+                        FrameCount = 24
+                    },
+                    VideoStream = new FfmpegStreamOptions()
+                    {
+                        QualityScale = 2
+                    },
+                    AudioStream = new FfmpegStreamOptions()
+                    {
+                        Codec = "aac"
+                    }
+                }
+            };
+
+            Assert.Equal("-i \"INPUT\" -frames 24 -q:v 2 -c:a aac \"OUTPUT\"", target.ToString());
+        }
     }
 }

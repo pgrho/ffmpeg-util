@@ -102,6 +102,7 @@ namespace Shipwreck.FfmpegUtil
 
             if (value != null)
             {
+                value.StreamType = type;
                 Streams.Add(value);
             }
         }
@@ -114,8 +115,8 @@ namespace Shipwreck.FfmpegUtil
 
         public FfmpegStreamOptions VideoStream
         {
-            get => GetStreamOptions(FfmpegStreamType.Video);
-            set => SetStreamOptions(value, FfmpegStreamType.Video);
+            get => GetStreamOptions(FfmpegStreamType.AllVideo);
+            set => SetStreamOptions(value, FfmpegStreamType.AllVideo);
         }
 
         public FfmpegStreamOptions AudioStream

@@ -24,7 +24,7 @@ namespace Shipwreck.FfmpegUtil
         /// Gets a value indicating whether this instance contains any value.
         /// </summary>
         public virtual bool IsEmpty
-            => Data?.Count > 0;
+            => Data.Count == 0;
 
         internal List<byte> Data { get; }
 
