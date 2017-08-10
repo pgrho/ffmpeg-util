@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Shipwreck.FfmpegUtil
@@ -105,7 +106,7 @@ namespace Shipwreck.FfmpegUtil
 
         #endregion Setters
 
-        public static async Task<FfprobeFormatInfo> GetFormatInfoAsync(string fileName, string executable)
+        public static async Task<FfprobeFormatInfo> GetFormatInfoAsync(string fileName, string executable = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var psi = new ProcessStartInfo(executable ?? "ffprobe");
             psi.CreateNoWindow = true;
@@ -121,7 +122,7 @@ namespace Shipwreck.FfmpegUtil
                 FilePath = Path.GetFullPath(fileName),
             }.ToString();
 
-            var po = ProcessWatcher.Start(psi);
+            var po = ProcessWatcher.Start(psi, cancellationToken);
 
             await po.Task.ConfigureAwait(false);
 
@@ -196,7 +197,7 @@ namespace Shipwreck.FfmpegUtil
         }
 
 
-        public static async Task<float[]> GetKeyFramesAsync(string fileName, string executable)
+        public static async Task<float[]> GetKeyFramesAsync(string fileName, string executable = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var psi = new ProcessStartInfo(executable ?? "ffprobe");
             psi.CreateNoWindow = true;
@@ -220,7 +221,7 @@ namespace Shipwreck.FfmpegUtil
                 SkipFrame = "nokey"
             }.ToString();
 
-            var po = ProcessWatcher.Start(psi);
+            var po = ProcessWatcher.Start(psi, cancellationToken);
 
             await po.Task.ConfigureAwait(false);
 

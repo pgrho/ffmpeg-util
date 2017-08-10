@@ -33,6 +33,13 @@ namespace Shipwreck.FfmpegUtil
                 tasks.Add(stdout);
             }
 
+            if (tasks.Count == 0 && cancellationToken.CanBeCanceled)
+            {
+                var cancel = new Task(WatchCancel, TaskCreationOptions.LongRunning);
+                cancel.Start();
+                tasks.Add(cancel);
+            }
+
             if (tasks.Count > 1)
             {
                 Task = Task.WhenAll(tasks);
@@ -68,7 +75,35 @@ namespace Shipwreck.FfmpegUtil
         {
             for (var l = r.ReadLine(); l != null; l = r.ReadLine())
             {
+                if (_CancellationToken.IsCancellationRequested && !Process.HasExited)
+                {
+                    try
+                    {
+                        Process.Kill();
+                    }
+                    catch { }
+                    _CancellationToken.ThrowIfCancellationRequested();
+                }
+
                 collection.Add(l);
+            }
+        }
+
+        private void WatchCancel()
+        {
+            for (;;)
+            {
+                if (_CancellationToken.IsCancellationRequested && !Process.HasExited)
+                {
+                    try
+                    {
+                        Process.Kill();
+                    }
+                    catch { }
+                    _CancellationToken.ThrowIfCancellationRequested();
+                }
+
+                Thread.Sleep(250);
             }
         }
     }
